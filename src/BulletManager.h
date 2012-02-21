@@ -13,12 +13,12 @@
 namespace BPS {
 
 class BulletManager {
-    private:
+    protected:
         std::vector<Bullet*> bullets;
         std::map<std::string,List*> bulletCode;
         int ticks;
         double rank;
-        
+    private:
         void checkSymbols(std::vector<std::string>&,List*) throw(Exception);
         Value* calculate(List* list) throw(Exception);
         Value* evaluate(List* list,Bullet*,const std::string&,unsigned int index = 0,std::map<std::string,double> additionalValue = std::map<std::string,double>()) throw(Exception);

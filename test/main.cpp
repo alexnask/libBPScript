@@ -8,10 +8,10 @@ int main() {
     BulletManager* manager = BulletManager::fromFile("example.script");
     manager->spawn("test",384,284);
 
-	sf::RenderWindow win(sf::VideoMode(800,600,32), "BPS test");
-	win.SetFramerateLimit(20);
+    sf::RenderWindow win(sf::VideoMode(800,600,32), "BPS test");
+    win.SetFramerateLimit(70);
     sf::RectangleShape bulletShape(sf::Vector2f(32,32));
-	while(win.IsOpen()) {
+    while(win.IsOpen()) {
 	    win.Clear();
 	    sf::Event event;
 	    while(win.PollEvent(event)) {
