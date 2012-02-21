@@ -1,0 +1,24 @@
+(begin test
+    (n
+        (when (== n 0)
+            (set acceleration 1)
+        )
+
+        (when (and (== (% n 5) 0) (<> n 0))
+            (spawn 1 a (test direction (+ speed .2) (+ acceleration .4) 1))
+        )
+
+        (when (< (% n 50) 25)
+            (set direction (+ direction 4))
+        )
+
+        (when (> (% n 50) 25)
+            (set direction (- direction 10))
+        )
+
+        (when true
+            (set lifetime (+ lifetime 1)) ; Infinite lifetime :D
+        )
+    )
+)
+

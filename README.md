@@ -1,0 +1,6 @@
+Bullet Pattern Script Library (libBPScript)
+===========================================
+
+libBPScript was created in the prospect of providing an easy to use C++ library to handle shmup bullet patterns. Other tools like libBulletML are available but from my experience they do not work and have several obscure bugs. libBPScript parses a simple language similar to a lisp dialect and creates a BulletManager object wich will spawn and handle the movement, direction, speed, acceleration and lifetime of bullets. I plan on maintaining this useful tool as much as possible, so please do contact me if you feel like there is an issue or if you have a cool but amnageable idea that could be implemented. Note that the library uses some C++11 features, like foreach loops and the std::function type, so you will need to use a modern compiler to compile the library (I personally use g++ 4.6). Docs on the mini language will be added soon. You will find an example program that uses @LaurentGomila/SFML to run and render bullets generated from a script. The library itself has no external dependencies.
+
+Note that the code is pretty terrible and that there may be some memory leaks, although I have tried to eliminate all I could.

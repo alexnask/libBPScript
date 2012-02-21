@@ -1,0 +1,57 @@
+#include "BulletManager.h"
+#include "Parser.h"
+#include <SFML/Graphics.hpp>
+#include <fstream>
+#include <iostream>
+
+using namespace BPS;
+
+int main() {
+    std::string str,buff;
+	std::ifstream infile;
+	infile.open ("example.script");
+    while(!infile.eof())
+    {
+	    getline(infile,buff);
+	    str += buff + '\n';
+    }
+	infile.close();
+	
+	Parser* parser = new Parser(str);
+	List* root = parser->run();
+	BulletManager* manager = new BulletManager(root);
+	delete parser;
+	delete root;
+	manager->spawn("test",384,284);
+
+	sf::RenderWindow win(sf::VideoMode(800,600,32), "BPS test");
+	win.SetFramerateLimit(20);
+    sf::RectangleShape bulletShape(sf::Vector2f(32,32));
+	while(win.IsOpen()) {
+	    win.Clear();
+	    sf::Event event;
+	    while(win.PollEvent(event)) {
+	        if(event.Type == sf::Event::Closed) {
+                win.Close();
+            }
+	    }
+	    try {
+	        manager->update();
+	        manager->map([&] (Bullet* bullet) {
+	            if(bullet) {
+	                if(bullet->getY() + 16 < 0 || bullet->getY() - 16 > 600 || bullet->getX() + 16 < 0 || bullet->getX() - 16 > 800 || !bullet->isActive()) {
+	                    manager->destroy(bullet);
+	                } else {
+	                    bulletShape.SetPosition(bullet->getX(),bullet->getY());
+	                    win.Draw(bulletShape);
+	                }
+	            }
+	        });
+	    } catch(Exception& exception) {
+	        std::cout << exception.what() << std::endl;
+	    }
+	    win.Display();
+	}
+	delete manager;
+    return 0;
+}
