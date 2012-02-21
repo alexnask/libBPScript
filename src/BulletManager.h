@@ -29,7 +29,7 @@ class BulletManager {
     public:
         BulletManager(List*) throw(Exception);
         static BulletManager* fromFile(const std::string&);
-        void spawn(const std::string&, double, double, double direction = 0.f, double speed = 0.f, double acceleration = 0.f, double lifetime = 10.f);
+        virtual void spawn(const std::string&, double, double, double direction = 0.f, double speed = 0.f, double acceleration = 0.f, double lifetime = 10.f);
         void update() throw(Exception);
         double getRank();
         void setRank(double);
