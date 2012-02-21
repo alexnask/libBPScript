@@ -1,28 +1,12 @@
 #include "BulletManager.h"
-#include "Parser.h"
 #include <SFML/Graphics.hpp>
-#include <fstream>
 #include <iostream>
 
 using namespace BPS;
 
 int main() {
-    std::string str,buff;
-	std::ifstream infile;
-	infile.open ("example.script");
-    while(!infile.eof())
-    {
-	    getline(infile,buff);
-	    str += buff + '\n';
-    }
-	infile.close();
-	
-	Parser* parser = new Parser(str);
-	List* root = parser->run();
-	BulletManager* manager = new BulletManager(root);
-	delete parser;
-	delete root;
-	manager->spawn("test",384,284);
+    BulletManager* manager = BulletManager::fromFile("example.script");
+    manager->spawn("test",384,284);
 
 	sf::RenderWindow win(sf::VideoMode(800,600,32), "BPS test");
 	win.SetFramerateLimit(20);

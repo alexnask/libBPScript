@@ -4,6 +4,23 @@ using namespace BPS;
 // TODO: Make sure there are no memory leaks and fix them if there are.
 // TODO: Make sure this shithole works.
 
+BulletManager* BulletManager::fromFile(const std::string& path) {
+    std::string str,buff;
+    std::ifstream infile;
+    infile.open(path);
+    while(!infile.eof()) {
+        getline(infile,buff);
+        str += buff + '\n';
+    }
+    infile.close();
+    Parser* parser = new Parser(str);
+    List* root = parser->run();
+    BulletManager* manager = new BulletManager(root);
+    delete parser;
+    delete root;
+    return manager;
+}
+
 BulletManager::BulletManager(List* root) throw(Exception) : ticks(0), rank(0.f) {
     if(Symbol::reserved.size() <= 0) {
         //Keywords

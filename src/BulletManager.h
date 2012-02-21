@@ -2,11 +2,13 @@
 #define BULLET_MANAGER__H
 #include "Bullet.h"
 #include "Value.h"
+#include "Parser.h"
 #include "Exception.h"
 #include <map>
 #include <cmath>
 #include <algorithm>
 #include <functional>
+#include <fstream>
 
 namespace BPS {
 
@@ -26,6 +28,7 @@ class BulletManager {
         void setVariable(const std::string&,double,Bullet*);
     public:
         BulletManager(List*) throw(Exception);
+        static BulletManager* fromFile(const std::string&);
         void spawn(const std::string&, double, double, double direction = 0.f, double speed = 0.f, double acceleration = 0.f, double lifetime = 10.f);
         void update() throw(Exception);
         double getRank();
