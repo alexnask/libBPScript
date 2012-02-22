@@ -148,7 +148,7 @@ Number* BulletManager::getNumber(Value* val, Bullet* bullet, const std::string& 
         return new Number(*(Number*)val);
     } else if(val->getType() == SYMBOL) {
         if(((Symbol*)val)->data == frameNum) {
-            return new Number((double)ticks,val->getLine());
+            return new Number((double)(ticks - bullet->getLifeStart()),val->getLine());
         }
         Value* foo = getVariable(((Symbol*)val)->data,bullet,val->getLine());
         if(foo->getType() == NUMBER) return new Number(*(Number*)foo);
@@ -170,7 +170,7 @@ Value* BulletManager::evaluate(List* _list, Bullet* bullet, const std::string& f
         Value* elem = list->data[ielem];
         if(elem->getType() == SYMBOL) {
             if(((Symbol*)elem)->data == frameNum) {
-                list->data[ielem] = new Number((double)ticks,elem->getLine());
+                list->data[ielem] = new Number((double)(ticks - bullet->getLifeStart()),elem->getLine());
             } else if(additional.find(((Symbol*)elem)->data) != additional.end()) {
                 list->data[ielem] = new Number(additional[((Symbol*)elem)->data],elem->getLine());
             } else {
@@ -593,7 +593,7 @@ void BulletManager::update() throw(Exception) {
 }
 
 void BulletManager::spawn(const std::string& name, double x, double y, double direction, double speed, double acceleration, double lifetime) {
-    Bullet* bullet = new Bullet(x,y);
+    Bullet* bullet = new Bullet(x,y,ticks);
     bullet->setType(name);
     bullet->setDirection(direction);
     bullet->setSpeed(speed);

@@ -8,7 +8,7 @@ inline double degreeToRadian(double degree) {
 }
 
 
-Bullet::Bullet(double _x, double _y) : ticks(0), active(true), x(_x), y(_y), speed(0.f), acceleration(0.f), direction(0.f), lifetime(0), type("none") {}
+Bullet::Bullet(double _x, double _y, int _lifestart) : ticks(0), active(true), x(_x), y(_y), speed(0.f), acceleration(0.f), direction(0.f), lifetime(0), type("none"), lifeStart(_lifestart) {}
 
 void Bullet::update() {
     if(active) {
@@ -77,7 +77,15 @@ double Bullet::getY() {
     return y;
 }
 
+int Bullet::getTicks() {
+    return ticks;
+}
+
 bool Bullet::isActive() {
     return active;
+}
+
+int Bullet::getLifeStart() {
+    return lifeStart;
 }
 

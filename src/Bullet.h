@@ -8,11 +8,12 @@ class Bullet {
     private:
         double speed, acceleration, direction, lifetime;
         int ticks;
+        int lifeStart; // Tick of the BulletManager the bullet's life started
         double x,y;
         bool active;
         std::string type;
     public:
-        Bullet(double,double);
+        Bullet(double,double,int);
         void update();
         
         std::string getType();
@@ -26,6 +27,7 @@ class Bullet {
         double getLifetime();
         void setLifetime(double);
         int getTicks();
+        int getLifeStart();
         double getX();
         double getY();
         bool isActive();
