@@ -15,26 +15,26 @@ class Bullet {
     public:
         Bullet(double,double,int);
         virtual ~Bullet();
-        void update();
+        virtual void update();
         
-        std::string getType();
-        void setType(const std::string&);
-        double getSpeed();
-        void setSpeed(double);
-        double getAcceleration();
-        void setAcceleration(double);
-        double getDirection();
-        void setDirection(double);
-        double getLifetime();
-        void setLifetime(double);
-        int getTicks();
-        int getLifeStart();
-        double getX();
-        double getY();
-        void setX(double);
-        void setY(double);
-        void setPosition(double,double);
-        bool isActive();
+        virtual std::string getType();
+        virtual void setType(const std::string&);
+        virtual double getSpeed();
+        virtual void setSpeed(double);
+        virtual double getAcceleration();
+        virtual void setAcceleration(double);
+        virtual double getDirection();
+        virtual void setDirection(double);
+        virtual double getLifetime();
+        virtual void setLifetime(double);
+        virtual int getTicks();
+        virtual int getLifeStart();
+        virtual double getX();
+        virtual double getY();
+        virtual void setX(double);
+        virtual void setY(double);
+        virtual void setPosition(double,double);
+        virtual bool isActive();
 };
 
 }

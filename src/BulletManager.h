@@ -30,12 +30,12 @@ class BulletManager {
         BulletManager(List*) throw(Exception);
         static BulletManager* fromFile(const std::string&);
         virtual void spawn(const std::string&, double, double, double direction = 0.f, double speed = 0.f, double acceleration = 0.f, double lifetime = 10.f);
-        void update() throw(Exception);
-        double getRank();
-        void setRank(double);
-        void map(std::function<void(Bullet*)>);
-        void destroy(Bullet*);
-        ~BulletManager();
+        virtual void update() throw(Exception);
+        virtual double getRank();
+        virtual void setRank(double);
+        virtual void map(std::function<void(Bullet*)>);
+        virtual void destroy(Bullet*);
+        virtual ~BulletManager();
 };
 
 }
