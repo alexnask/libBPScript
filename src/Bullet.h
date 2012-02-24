@@ -31,6 +31,9 @@ class Bullet {
         int getLifeStart();
         double getX();
         double getY();
+        void setX(double);
+        void setY(double);
+        void setPosition(double,double);
         bool isActive();
 };
 

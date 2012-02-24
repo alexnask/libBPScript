@@ -80,6 +80,18 @@ double Bullet::getY() {
     return y;
 }
 
+void Bullet::setX(double _x) {
+    x = _x;
+}
+
+void Bullet::setY(double _y) {
+    y = _y;
+}
+
+void Bullet::setPosition(double _x, double _y) {
+    setX(_x); setY(_y);
+}
+
 int Bullet::getTicks() {
     return ticks;
 }

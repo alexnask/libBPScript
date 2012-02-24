@@ -50,6 +50,9 @@ BulletManager::BulletManager(List* root) throw(Exception) : ticks(0), rank(0.f) 
         Symbol::reserved.push_back("/");
         Symbol::reserved.push_back("*");
         Symbol::reserved.push_back("%");
+        
+        Symbol::reserved.push_back("x");
+        Symbol::reserved.push_back("y");
     }
     if(root->data.size() > 0) {
         for(unsigned int bullet = 0; bullet < root->data.size(); bullet++) {
@@ -450,6 +453,10 @@ Value* BulletManager::getVariable(const std::string& name, Bullet* bullet, unsig
         return new Number(bullet->getLifetime(),line);
     } else if(name == "rank") {
         return new Number(rank,line);
+    } else if (name == "x") {
+        return new Number(bullet->getX(), line);
+    } else if (name == "y") {
+        return new Number(bullet->getY(), line);
     } else if(name == "and" || name == "or" || name == "==" || name == ">=" || name == "<=" || name == "<>" || name == ">" || name == "<" || name == "+" || name == "-" || name == "*" || name == "/" || name == "*" || name == "%") {
         return new Symbol(name,line);
     }
@@ -465,6 +472,10 @@ void BulletManager::setVariable(const std::string& name, double value, Bullet* b
         bullet->setAcceleration(value);
     } else if(name == "lifetime") {
         bullet->setLifetime(value);
+    } else if(name == "x") {
+        bullet->setX(value);
+    } else if(name == "y") {
+        bullet->setY(value);
     }
 }
 
