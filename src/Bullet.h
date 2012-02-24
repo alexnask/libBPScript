@@ -14,6 +14,7 @@ class Bullet {
         std::string type;
     public:
         Bullet(double,double,int);
+        virtual ~Bullet();
         void update();
         
         std::string getType();
