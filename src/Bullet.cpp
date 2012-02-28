@@ -18,7 +18,7 @@ void Bullet::update() {
         if(ticks > lifetime) {
             active = false;
         }
-        
+
         double speedx = speed * cos(degreeToRadian(direction));
         double speedy = speed * sin(degreeToRadian(direction));
         x += speedx;

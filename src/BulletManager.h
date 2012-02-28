@@ -15,6 +15,7 @@ namespace BPS {
 class BulletManager {
     protected:
         std::vector<Bullet*> bullets;
+        std::vector<Bullet*>::iterator iter;
         std::map<std::string,List*> bulletCode;
         int ticks;
         double rank;

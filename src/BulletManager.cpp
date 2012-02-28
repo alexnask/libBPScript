@@ -622,17 +622,21 @@ void BulletManager::setRank(double _rank) {
 }
 
 void BulletManager::map(std::function<void(Bullet*)> apply) {
-    std::for_each(bullets.begin(), bullets.end(), apply);
+    auto end = bullets.end();
+    for(iter = bullets.begin(); iter != end; ++iter) {
+        apply(*iter);
+        end = bullets.end();
+    }
 }
 
 void BulletManager::destroy(Bullet* bullet) {
-    std::vector<Bullet*>::iterator iter = std::find(bullets.begin(), bullets.end(), bullet);
-    if(iter != bullets.end()) {
+    std::vector<BPS::Bullet*>::iterator fiter = std::find(bullets.begin(), bullets.end(), bullet);
+    if(fiter != bullets.end()) {
        if(bullet) {
            delete bullet;
            bullet = NULL;
        }
-       bullets.erase(iter);
+       iter = bullets.erase(fiter) - 1;
     }
 }
 
