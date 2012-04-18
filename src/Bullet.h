@@ -5,7 +5,7 @@
 namespace BPS {
 
 class Bullet {
-    private:
+    protected:
         double speed, acceleration, direction, lifetime;
         int ticks;
         int lifeStart; // Tick of the BulletManager the bullet's life started
@@ -17,24 +17,24 @@ class Bullet {
         virtual ~Bullet();
         virtual void update();
         
-        virtual std::string getType();
+        virtual std::string getType() const;
         virtual void setType(const std::string&);
-        virtual double getSpeed();
+        virtual double getSpeed() const;
         virtual void setSpeed(double);
-        virtual double getAcceleration();
+        virtual double getAcceleration() const;
         virtual void setAcceleration(double);
-        virtual double getDirection();
+        virtual double getDirection() const;
         virtual void setDirection(double);
-        virtual double getLifetime();
+        virtual double getLifetime() const;
         virtual void setLifetime(double);
-        virtual int getTicks();
-        virtual int getLifeStart();
-        virtual double getX();
-        virtual double getY();
+        virtual int getTicks() const;
+        virtual int getLifeStart() const;
+        virtual double getX() const;
+        virtual double getY() const;
         virtual void setX(double);
         virtual void setY(double);
         virtual void setPosition(double,double);
-        virtual bool isActive();
+        virtual bool isActive() const;
 };
 
 }

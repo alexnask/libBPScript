@@ -1,10 +1,10 @@
 #include "Bullet.h"
 #include <cmath>
 using namespace BPS;
-#define pi 3.14159265
+const double PI = 3.14159265;
 
 inline double degreeToRadian(double degree) {
-	return degree * (pi/180);
+	return degree * (PI/180);
 }
 
 
@@ -32,7 +32,7 @@ void Bullet::update() {
     }
 }
 
-std::string Bullet::getType() {
+std::string Bullet::getType() const {
     return type;
 }
 
@@ -40,7 +40,7 @@ void Bullet::setType(const std::string& _type) {
     type = _type;
 }
 
-double Bullet::getSpeed() {
+double Bullet::getSpeed() const {
     return speed;
 }
 
@@ -48,7 +48,7 @@ void Bullet::setSpeed(double _speed) {
     speed = _speed;
 }
 
-double Bullet::getAcceleration() {
+double Bullet::getAcceleration() const {
     return acceleration;
 }
 
@@ -56,7 +56,7 @@ void Bullet::setAcceleration(double _acceleration) {
     acceleration = _acceleration;
 }
 
-double Bullet::getDirection() {
+double Bullet::getDirection() const {
     return direction;
 }
 
@@ -64,7 +64,7 @@ void Bullet::setDirection(double _direction) {
     direction = _direction;
 }
 
-double Bullet::getLifetime() {
+double Bullet::getLifetime() const {
     return lifetime;
 }
 
@@ -72,11 +72,11 @@ void Bullet::setLifetime(double _lifetime) {
     lifetime = _lifetime;
 }
 
-double Bullet::getX() {
+double Bullet::getX() const {
     return x;
 }
 
-double Bullet::getY() {
+double Bullet::getY() const {
     return y;
 }
 
@@ -92,15 +92,15 @@ void Bullet::setPosition(double _x, double _y) {
     setX(_x); setY(_y);
 }
 
-int Bullet::getTicks() {
+int Bullet::getTicks() const {
     return ticks;
 }
 
-bool Bullet::isActive() {
+bool Bullet::isActive() const {
     return active;
 }
 
-int Bullet::getLifeStart() {
+int Bullet::getLifeStart() const {
     return lifeStart;
 }
 

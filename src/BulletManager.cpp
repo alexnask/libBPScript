@@ -613,7 +613,7 @@ void BulletManager::spawn(const std::string& name, double x, double y, double di
     bullets.push_back(bullet);
 }
 
-double BulletManager::getRank() {
+double BulletManager::getRank() const {
     return rank;
 }
 
