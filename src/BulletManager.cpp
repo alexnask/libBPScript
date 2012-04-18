@@ -133,11 +133,7 @@ void BulletManager::checkSymbols(std::vector<std::string>& ignore, List* list) {
                 }
             }
 
-            try {
-                checkSymbols(ignore, sublist);
-            } catch(Exception& exception) {
-                throw(exception);
-            }
+            checkSymbols(ignore, sublist);
             if(ignored) {
                 ignore.pop_back();
             }
@@ -160,11 +156,7 @@ Number* BulletManager::getNumber(Value* val, Bullet* bullet, const std::string& 
         if(foo->getType() == NUMBER) return new Number(*(Number*)foo);
         delete foo;
     } else {
-        try {
-            return getNumber(evaluate((List*)val,bullet,frameNum),bullet,frameNum);
-        } catch(Exception& exception) {
-            throw(exception);
-        }
+        return getNumber(evaluate((List*)val,bullet,frameNum),bullet,frameNum);
     }
     throw(Exception("Could not evaluate value to number.",val->getLine()));
 }
@@ -213,21 +205,17 @@ Value* BulletManager::calculate(List* list) {
                             throw(Exception("Invalid symbol " + ((Symbol*)list->data[i])->data + " passed as an argument to &&.",list->data[i]->getLine()));
                         }
                     } else if(list->data[i]->getType() == LIST) {
-                        try {
-                            Value* ret = calculate((List*)list->data[i]);
-                            if(ret->getType() != SYMBOL) {
-                                throw(Exception("Invalid argument of type argument passed to &&.",ret->getLine()));
-                            } else {
-                                if(((Symbol*)ret)->data == "false") {
-                                    isTrue = false;
-                                } else if(((Symbol*)ret)->data != "true") {
-                                    throw(Exception("Invalid symbol " + ((Symbol*)ret)->data + " passed as an argument to &&.",ret->getLine()));
-                                }
+                        Value* ret = calculate((List*)list->data[i]);
+                        if(ret->getType() != SYMBOL) {
+                            throw(Exception("Invalid argument of type argument passed to &&.",ret->getLine()));
+                        } else {
+                            if(((Symbol*)ret)->data == "false") {
+                                isTrue = false;
+                            } else if(((Symbol*)ret)->data != "true") {
+                                throw(Exception("Invalid symbol " + ((Symbol*)ret)->data + " passed as an argument to &&.",ret->getLine()));
                             }
-                            delete ret;
-                        } catch(Exception& exception) {
-                            throw(exception);
                         }
+                        delete ret;
                     } else {
                         throw(Exception("Invalid argument of type argument passed to &&.",list->getLine()));
                     }
@@ -246,23 +234,19 @@ Value* BulletManager::calculate(List* list) {
                             throw(Exception("Invalid symbol " + ((Symbol*)list->data[i])->data + " passed as an argument to ||.",list->data[i]->getLine()));
                         }
                     } else if(list->data[i]->getType() == LIST) {
-                        try {
-                            Value* ret = calculate((List*)list->data[i]);
-                            if(ret->getType() != SYMBOL) {
-                                throw(Exception("Invalid argument of type argument passed to ||.",ret->getLine()));
-                            } else {
-                                if(((Symbol*)ret)->data == "true") {
-                                    isTrue = true;
-                                } else if(((Symbol*)ret)->data != "false") {
-                                    throw(Exception("Invalid symbol " + ((Symbol*)ret)->data + " passed as an argument to ||.",ret->getLine()));
-                                }
+                        Value* ret = calculate((List*)list->data[i]);
+                        if(ret->getType() != SYMBOL) {
+                            throw(Exception("Invalid argument of type argument passed to ||.",ret->getLine()));
+                        } else {
+                            if(((Symbol*)ret)->data == "true") {
+                                isTrue = true;
+                            } else if(((Symbol*)ret)->data != "false") {
+                                throw(Exception("Invalid symbol " + ((Symbol*)ret)->data + " passed as an argument to ||.",ret->getLine()));
                             }
-                            delete ret;
-                        } catch(Exception& exception) {
-                            throw(exception);
                         }
+                        delete ret;
                     } else {
-                        throw(Exception("Invalid argument of type argument passed to ||.",list->getLine()));
+                        throw(Exception("Invalid argument of type argument passed to or.",list->getLine()));
                     }
                 }
                 return new Symbol(((isTrue) ? "true" : "false"), list->getLine());
@@ -272,8 +256,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { Value* temp = val1; val1 = calculate((List*)val1); delete temp; } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { Value* temp = val2; val2 = calculate((List*)val2); delete temp; } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { Value* temp = val1; val1 = calculate((List*)val1); delete temp; }
+                if(val2->getType() == LIST) { Value* temp = val2; val2 = calculate((List*)val2); delete temp; }
                 if(val1->getType() != val2->getType()) {
                     return new Symbol("false", list->getLine());
                 }
@@ -297,8 +281,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != val2->getType()) {
                     return new Symbol("true", list->getLine());
                 }
@@ -319,8 +303,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != NUMBER || val2->getType() != NUMBER) {
                     throw(Exception("You can only compare numbers you silly :D",val1->getLine()));
                 }
@@ -331,8 +315,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != NUMBER || val2->getType() != NUMBER) {
                     throw(Exception("You can only compare numbers you silly :D",val1->getLine()));
                 }
@@ -343,8 +327,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != NUMBER || val2->getType() != NUMBER) {
                     throw(Exception("You can only compare numbers you silly :D",val1->getLine()));
                 }
@@ -355,8 +339,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != NUMBER || val2->getType() != NUMBER) {
                     throw(Exception("You can only compare numbers you silly :D",val1->getLine()));
                 }
@@ -368,7 +352,7 @@ Value* BulletManager::calculate(List* list) {
                 double ret = 0.f;
                 for(unsigned int i = 1; i < list->data.size(); i++) {
                     Value* val = list->data[i];
-                    if(val->getType() == LIST) try { val = calculate((List*)val); } catch(Exception& exception) { throw(exception); }
+                    if(val->getType() == LIST) { val = calculate((List*)val); }
                     if(val->getType() != NUMBER) {
                         throw(Exception("+ only accepts numbers.",val->getLine()));
                     }
@@ -380,14 +364,14 @@ Value* BulletManager::calculate(List* list) {
                     throw(Exception("- expects at least two arguments.",list->getLine()));
                 }
                 Value* val1 = list->data[1];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
                 if(val1->getType() != NUMBER) {
                     throw(Exception("- only accepts numbers.",val1->getLine()));
                 }
                 double ret = ((Number*)val1)->data;
                 for(unsigned int i = 2; i < list->data.size(); i++) {
                     Value* val = list->data[i];
-                    if(val->getType() == LIST) try { val = calculate((List*)val); } catch(Exception& exception) { throw(exception); }
+                    if(val->getType() == LIST) { val = calculate((List*)val); }
                     if(val->getType() != NUMBER) {
                         throw(Exception("- only accepts numbers.",val->getLine()));
                     }
@@ -399,14 +383,14 @@ Value* BulletManager::calculate(List* list) {
                     throw(Exception("* expects at least two arguments.",list->getLine()));
                 }
                 Value* val1 = list->data[1];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
                 if(val1->getType() != NUMBER) {
                     throw(Exception("* only accepts numbers.",val1->getLine()));
                 }
                 double ret = ((Number*)val1)->data;
                 for(unsigned int i = 2; i < list->data.size(); i++) {
                     Value* val = list->data[i];
-                    if(val->getType() == LIST) try { val = calculate((List*)val); } catch(Exception& exception) { throw(exception); }
+                    if(val->getType() == LIST) { val = calculate((List*)val); }
                     if(val->getType() != NUMBER) {
                         throw(Exception("* only accepts numbers.",val->getLine()));
                     }
@@ -419,8 +403,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != NUMBER || val2->getType() != NUMBER) {
                     throw(Exception("/ only accepts numbers.",val1->getLine()));
                 }
@@ -431,8 +415,8 @@ Value* BulletManager::calculate(List* list) {
                 }
                 Value* val1 = list->data[1];
                 Value* val2 = list->data[2];
-                if(val1->getType() == LIST) try { val1 = calculate((List*)val1); } catch(Exception& exception) { throw(exception); }
-                if(val2->getType() == LIST) try { val2 = calculate((List*)val2); } catch(Exception& exception) { throw(exception); }
+                if(val1->getType() == LIST) { val1 = calculate((List*)val1); }
+                if(val2->getType() == LIST) { val2 = calculate((List*)val2); }
                 if(val1->getType() != NUMBER || val2->getType() != NUMBER) {
                     throw(Exception("% only accepts numbers.",val1->getLine()));
                 }
@@ -497,11 +481,7 @@ void BulletManager::update() {
                     List* rule = new List(*(List*)*val);
                     Value* condition;
                     if(rule->data[1]->getType() == LIST) {
-                        try {
-                            condition = evaluate((List*)rule->data[1],bullet,frameNum);
-                        } catch(Exception& exception) {
-                            throw(exception);
-                        }
+                        condition = evaluate((List*)rule->data[1],bullet,frameNum);
                     } else if(rule->data[1]->getType() == SYMBOL) {
                         if(((Symbol*)rule->data[1])->data == "true" || ((Symbol*)rule->data[1])->data == "false") {
                             condition = (Value*)(new Symbol(*(Symbol*)rule->data[1]));
@@ -535,25 +515,17 @@ void BulletManager::update() {
                                         // TODO: check this code
                                         throw(Exception("Variable " + ((Symbol*)statement->data[1])->data  + " is immutable, you cannot change it.", statement->data[1]->getLine()));
                                     }
-                                    try {
-                                        Number* val = getNumber(statement->data[2],bullet,frameNum);
-                                        setVariable(((Symbol*)statement->data[1])->data,val->data,bullet);
-                                        delete val;
-                                    } catch(Exception& exception) {
-                                        throw(exception);
-                                    }
+                                    Number* val = getNumber(statement->data[2],bullet,frameNum);
+                                    setVariable(((Symbol*)statement->data[1])->data,val->data,bullet);
+                                    delete val;
                                 } else if(((Symbol*)statement->data[0])->data == "spawn") {
                                     int spawns = 0;
                                     if(statement->data.size() != 4) {
                                         throw(Exception("spawn expects exactly three arguments.",statement->getLine()));
                                     }
-                                    try {
-                                        Number* val = getNumber(statement->data[1],bullet,frameNum);
-                                        spawns = (int)round(val->data);
-                                        delete val;
-                                    } catch(Exception& exception) {
-                                        throw(exception);
-                                    }
+                                    Number* val = getNumber(statement->data[1],bullet,frameNum);
+                                    spawns = (int)round(val->data);
+                                    delete val;
                                     if(statement->data[2]->getType() != SYMBOL) {
                                         throw(Exception("spawn's second argument should be the name of the spawned number variable.",statement->data[2]->getLine()));
                                     } else if(std::find(Symbol::reserved.begin(), Symbol::reserved.end(), ((Symbol*)statement->data[2])->data) != Symbol::reserved.end()) {
@@ -569,22 +541,18 @@ void BulletManager::update() {
                                         additional[((Symbol*)statement->data[2])->data] = (double)i;
                                         double arguments[4] = { 0.f };
                                         for(unsigned int j = 1; j < 5; j++) {
-                                            try {
-                                                if(((List*)statement->data[3])->data[j]->getType() != LIST) {
-                                                    Number* val = getNumber(((List*)statement->data[3])->data[j],bullet,frameNum);
-                                                    arguments[j-1] = val->data;
-                                                    delete val;
-                                                } else {
-                                                    // The problem appears to be that the list is modified while it should not xO
-                                                    Value* val = evaluate((List*)((List*)statement->data[3])->data[j],bullet,frameNum,0,additional);
-                                                    if(val->getType() != NUMBER) {
-                                                        throw(Exception("Could not evaluate argument of the bullet construction lsit to a number.",val->getLine()));
-                                                    }
-                                                    arguments[j-1] = ((Number*)val)->data;
-                                                    delete val;
+                                            if(((List*)statement->data[3])->data[j]->getType() != LIST) {
+                                                Number* val = getNumber(((List*)statement->data[3])->data[j],bullet,frameNum);
+                                                arguments[j-1] = val->data;
+                                                delete val;
+                                            } else {
+                                                // The problem appears to be that the list is modified while it should not xO
+                                                Value* val = evaluate((List*)((List*)statement->data[3])->data[j],bullet,frameNum,0,additional);
+                                                if(val->getType() != NUMBER) {
+                                                    throw(Exception("Could not evaluate argument of the bullet construction lsit to a number.",val->getLine()));
                                                 }
-                                            } catch(Exception& exception) {
-                                                throw(exception);
+                                                arguments[j-1] = ((Number*)val)->data;
+                                                delete val;
                                             }
                                         }
                                         spawn(((Symbol*)(((List*)statement->data[3])->data[0]))->data,bullet->getX(),bullet->getY(),arguments[0],arguments[1],arguments[2],arguments[3]);
