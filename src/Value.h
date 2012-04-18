@@ -15,6 +15,7 @@ enum ValueType {
 class Value {
     public:
         Value(unsigned int,ValueType);
+        virtual ~Value();
         virtual std::string toString() const = 0;
         virtual Value* clone() const = 0;
         ValueType getType() const {

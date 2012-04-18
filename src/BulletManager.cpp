@@ -11,8 +11,7 @@ BulletManager* BulletManager::fromFile(const std::string& path) {
     std::string str,buff;
     std::ifstream infile;
     infile.open(path);
-    while(!infile.eof()) {
-        getline(infile,buff);
+    while(getline(infile,buff)) {
         str += buff + '\n';
     }
     infile.close();
@@ -53,7 +52,7 @@ BulletManager::BulletManager(List* root) : ticks(0), rank(0.f) {
         Symbol::reserved.push_back("/");
         Symbol::reserved.push_back("*");
         Symbol::reserved.push_back("%");
-        
+
         Symbol::reserved.push_back("x");
         Symbol::reserved.push_back("y");
     }

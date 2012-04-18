@@ -6,6 +6,8 @@ using namespace BPS;
 
 Value::Value(unsigned int _line, ValueType _type) : type(_type), line(_line) {}
 
+Value::~Value() {}
+
 Number::Number(double _data, unsigned int _line) : Value(_line,NUMBER), data(_data) {}
 std::string Number::toString() const {
     std::ostringstream strs;
