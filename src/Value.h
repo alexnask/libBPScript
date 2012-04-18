@@ -3,9 +3,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <cctype>
-#include <cstdlib>
-#include <sstream>
 
 namespace BPS {
 

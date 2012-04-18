@@ -24,7 +24,7 @@ BulletManager* BulletManager::fromFile(const std::string& path) {
     return manager;
 }
 
-BulletManager::BulletManager(List* root) throw(Exception) : ticks(0), rank(0.f) {
+BulletManager::BulletManager(List* root) : ticks(0), rank(0.f) {
     if(Symbol::reserved.size() <= 0) {
         //Keywords
         Symbol::reserved.push_back("begin");
@@ -115,7 +115,7 @@ BulletManager::BulletManager(List* root) throw(Exception) : ticks(0), rank(0.f) 
     }
 }
 
-void BulletManager::checkSymbols(std::vector<std::string>& ignore, List* list) throw(Exception) {
+void BulletManager::checkSymbols(std::vector<std::string>& ignore, List* list) {
     for(unsigned int elem = 0; elem < list->data.size(); ++elem) {
         if(list->data[elem]->getType() == LIST) {
             List* sublist = (List*)list->data[elem];
@@ -149,7 +149,7 @@ void BulletManager::checkSymbols(std::vector<std::string>& ignore, List* list) t
     }
 }
 
-Number* BulletManager::getNumber(Value* val, Bullet* bullet, const std::string& frameNum) throw(Exception) {
+Number* BulletManager::getNumber(Value* val, Bullet* bullet, const std::string& frameNum) {
     if(val->getType() == NUMBER) {
         return new Number(*(Number*)val);
     } else if(val->getType() == SYMBOL) {
@@ -169,7 +169,7 @@ Number* BulletManager::getNumber(Value* val, Bullet* bullet, const std::string& 
     throw(Exception("Could not evaluate value to number.",val->getLine()));
 }
 
-Value* BulletManager::evaluate(List* _list, Bullet* bullet, const std::string& frameNum, unsigned int index, std::map<std::string,double> additional) throw(Exception) {
+Value* BulletManager::evaluate(List* _list, Bullet* bullet, const std::string& frameNum, unsigned int index, std::map<std::string,double> additional) {
     // The list's symbols are replaced then the list is calculated
     List* list = new List(*_list);
     for(unsigned int ielem = index; ielem < list->data.size(); ielem++) {
@@ -191,7 +191,7 @@ Value* BulletManager::evaluate(List* _list, Bullet* bullet, const std::string& f
     return val;
 }
 
-Value* BulletManager::calculate(List* list) throw(Exception) {
+Value* BulletManager::calculate(List* list) {
     // This list should be clear of variable symbols and be left with only operators
     if(list->data.size() > 0) {
         if(list->data[0]->getType() != SYMBOL && list->data.size() != 1) {
@@ -482,8 +482,8 @@ void BulletManager::setVariable(const std::string& name, double value, Bullet* b
     }
 }
 
-void BulletManager::update() throw(Exception) {
-    // Here, we will find all bullets of the same type and execute the bullet code on them. MUHAHAHAHAHA (wootlol)
+void BulletManager::update() {
+    // Here, we will find all bullets of the same type and execute the bullet code on them.
     unsigned int count = bullets.size();
     for(unsigned int counter = 0; counter < count; counter++) {
         Bullet* bullet = bullets[counter];

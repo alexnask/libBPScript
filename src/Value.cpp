@@ -1,5 +1,7 @@
 #include "Value.h"
-#include <iostream>
+#include <cctype>
+#include <cstdlib>
+#include <sstream>
 using namespace BPS;
 
 Value::Value(unsigned int _line, ValueType _type) : type(_type), line(_line) {}
