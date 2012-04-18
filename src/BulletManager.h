@@ -4,11 +4,7 @@
 #include "Value.h"
 #include "Parser.h"
 #include "Exception.h"
-#include <map>
-#include <cmath>
-#include <algorithm>
 #include <functional>
-#include <fstream>
 
 namespace BPS {
 

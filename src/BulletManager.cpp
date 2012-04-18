@@ -1,8 +1,11 @@
 #include "BulletManager.h"
+#include <map>
+#include <cmath>
+#include <algorithm>
+#include <fstream>
 using namespace BPS;
 
 // TODO: Make sure there are no memory leaks and fix them if there are.
-// TODO: Make sure this shithole works.
 
 BulletManager* BulletManager::fromFile(const std::string& path) {
     std::string str,buff;

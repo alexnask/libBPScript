@@ -5,7 +5,7 @@ using namespace BPS;
 Value::Value(unsigned int _line, ValueType _type) : type(_type), line(_line) {}
 
 Number::Number(double _data, unsigned int _line) : Value(_line,NUMBER), data(_data) {}
-std::string Number::toString() {
+std::string Number::toString() const {
     std::ostringstream strs;
     strs << data;
     return strs.str();
@@ -14,7 +14,7 @@ std::string Number::toString() {
 std::vector<std::string> Symbol::reserved;
 
 Symbol::Symbol(std::string _data, unsigned int _line) : Value(_line,SYMBOL), data(_data) {}
-std::string Symbol::toString() {
+std::string Symbol::toString() const {
     return data;
 }
 
@@ -33,7 +33,7 @@ List::~List() {
         data[i] = NULL;
     }
 }
-std::string List::toString() {
+std::string List::toString() const {
     std::string str = "(";
     for(unsigned int i = 0; i < data.size(); i++) {
         str += data[i]->toString();

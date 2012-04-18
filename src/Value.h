@@ -18,9 +18,9 @@ enum ValueType {
 class Value {
     public:
         Value(unsigned int,ValueType);
-        virtual std::string toString() = 0;
+        virtual std::string toString() const = 0;
         virtual Value* clone() const = 0;
-        ValueType getType() {
+        ValueType getType() const {
             return type;
         }
         unsigned int getLine() const {
@@ -36,7 +36,7 @@ class Number : public Value {
         double data;
         
         Number(double,unsigned int);
-        virtual std::string toString();
+        virtual std::string toString() const;
         virtual Number* clone() const {return(new Number(*this));};
 };
 
@@ -46,7 +46,7 @@ class Symbol : public Value {
         std::string data;
         
         Symbol(std::string,unsigned int);
-        virtual std::string toString();
+        virtual std::string toString() const;
         virtual Symbol* clone() const {return(new Symbol(*this));};
 };
 
@@ -60,7 +60,7 @@ class List : public Value {
         
         virtual List* clone() const {return(new List(*this));};
         ~List();
-        virtual std::string toString();
+        virtual std::string toString() const;
 };
 
 }
